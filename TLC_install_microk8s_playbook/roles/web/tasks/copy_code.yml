@@ -1,0 +1,13 @@
+---
+# Ces tâches permettent de copier le dernier code de développement/production depuis le système de contrôle de version.
+
+- name: Copier le code depuis le dépôt
+  git:
+    repo: "{{ repository }}"
+    dest: /var/www/html/
+
+- name: Créer le fichier index.php
+  template:
+    src: index.php.j2
+    dest: /var/www/html/index.php
+  become: yes

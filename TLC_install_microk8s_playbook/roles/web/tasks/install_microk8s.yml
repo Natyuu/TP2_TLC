@@ -1,0 +1,30 @@
+---
+# Ces tâches permettent d'installer microk8s.
+
+- name: Télécharger et installer MicroK8s
+  shell: snap install microk8s --classic
+
+- name: Ajouter l'utilisateur actuel au groupe microk8s
+  register: outpout
+  user:
+    name: "{{ ansible_user }}"
+    groups: microk8s
+    append: yes
+
+- name: Debug
+  debug:
+    msg: "{{ ansible_user }}"
+
+- name: Ajouter l'utilisateur actuel au groupe docker
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: yes
+
+- name: Exécuter le script MicroK8s pour activer des fonctionnalités facultatives
+  shell: microk8s enable dns dashboard storage
+
+- name: Exécuter le script MicroK8s pour autoriser l'accès à kubectl
+  shell: microk8s kubectl config view --raw > $HOME/.kube/config
+  args:
+    creates: $HOME/.kube/config

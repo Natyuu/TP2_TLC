@@ -1,0 +1,27 @@
+---
+# Ces tâches permettent d'installer Docker en ajoutant le dépôt Docker et les packages nécessaires.
+
+- name: Mise à jour du cache des paquets
+  apt:
+    update_cache: yes
+  when: ansible_os_family == 'Debian'
+
+- name: Installation des dépendances
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - software-properties-common
+
+- name: Ajout de la clé GPG officielle de Docker
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+
+- name: Ajout du dépôt Docker
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+
+- name: Installation de Docker
+  apt:
+    name: docker-ce
+    state: present

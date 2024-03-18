@@ -1,0 +1,5 @@
+---
+- include: install_httpd.yml
+- include: install_docker.yml
+- include: install_microk8s.yml
+- include: copy_code.yml

@@ -1,0 +1,26 @@
+---
+# Ces tâches installent http et les modules PHP.
+
+- name: Installer http et les modules PHP
+  apt:
+    name: ['apache2', 'php', 'php-mysql', 'git']
+    state: present
+  become: yes
+
+- name: Supprimer récursivement le répertoire
+  ansible.builtin.file:
+    path: /var/www/html
+    state: absent
+
+- name: Créer un répertoire s'il n'existe pas
+  ansible.builtin.file:
+    path: /var/www/html
+    state: directory
+    mode: '0755'
+
+- name: État du service http
+  service:
+    name: apache2
+    state: started
+    enabled: yes
+  become: yes
