@@ -1,6 +1,6 @@
 # Playbook Ansible TP TLC
 
-## Auteur
+## Auteurs
 
 **CHAPLAIS Alexandre** et **BRAMBAN Kenny**
 
